@@ -4,6 +4,9 @@ import boto3
 import requests
 from datetime import datetime
 from dotenv import load_dotenv
+from datetime import datetime
+from dotenv import set_key
+from pathlib import Path
 
 # Load environment variables
 load_dotenv()
@@ -11,8 +14,12 @@ load_dotenv()
 class WeatherDashboard:
     def __init__(self):
         self.api_key = os.getenv('OPENWEATHER_API_KEY')
+        final_bucket_name=os.getenv('AWS_BUCKET_NAME')+ "-"+datetime.now().strftime("%Y%m%d-%H%M%S")
+        set_key(Path(".env"), "AWS_BUCKET_NAME", final_bucket_name)
+        # self.bucket_name = os.getenv('AWS_BUCKET_NAME')+ "-"+datetime.now().strftime("%Y%m%d-%H%M%S")
         self.bucket_name = os.getenv('AWS_BUCKET_NAME')
         self.s3_client = boto3.client('s3')
+        # self.s3_client = boto3.client('s3', region_name='us-east-1')
 
     def create_bucket_if_not_exists(self):
         """Create S3 bucket if it doesn't exist"""
