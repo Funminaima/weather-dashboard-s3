@@ -3,9 +3,10 @@ import boto3
 import json
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
 load_dotenv()
-
+# initialize flask app 
 app = Flask(__name__)
 
 # AWS S3 configuration
@@ -15,14 +16,21 @@ s3_client = boto3.client(
     aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
     region_name=os.getenv('AWS_REGION')
 )
-bucket_name = os.getenv('AWS_BUCKET_NAME')
+# bucket_name = os.getenv('AWS_BUCKET_NAME')
+bucket_name_path = Path("bucket_name.txt")
+with open(bucket_name_path, "r") as f:
+    bucket_name = f.read().strip()
+
+print(f"Using bucket: {bucket_name}")
 
 @app.route('/')
 def index():
     """Home page listing available weather data files"""
     try:
         # List all weather files in the bucket
+         
         response = s3_client.list_objects_v2(Bucket=bucket_name, Prefix="weather-data/")
+      
         files = [obj['Key'] for obj in response.get('Contents', [])]
         return render_template('index.html', files=files)
     except Exception as e:

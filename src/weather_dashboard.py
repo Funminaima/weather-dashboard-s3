@@ -13,13 +13,20 @@ load_dotenv()
 
 class WeatherDashboard:
     def __init__(self):
+        base_bucket_name = os.getenv('AWS_BUCKET_NAME')
+        # Generate a unique bucket name for this instance
+        self.bucket_name = f"{base_bucket_name}-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+        
         self.api_key = os.getenv('OPENWEATHER_API_KEY')
-        final_bucket_name=os.getenv('AWS_BUCKET_NAME')+ "-"+datetime.now().strftime("%Y%m%d-%H%M%S")
-        set_key(Path(".env"), "AWS_BUCKET_NAME", final_bucket_name)
-        # self.bucket_name = os.getenv('AWS_BUCKET_NAME')+ "-"+datetime.now().strftime("%Y%m%d-%H%M%S")
-        self.bucket_name = os.getenv('AWS_BUCKET_NAME')
         self.s3_client = boto3.client('s3')
+
         # self.s3_client = boto3.client('s3', region_name='us-east-1')
+        # save unique bucket name to dedicated file 
+        bucket_name_path = Path("bucket_name.txt")
+        with open(bucket_name_path, "w") as f:
+            f.write(self.bucket_name)
+
+        
 
     def create_bucket_if_not_exists(self):
         """Create S3 bucket if it doesn't exist"""

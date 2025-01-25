@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Dashboard</title>
+  </head>
+  <body>
+    <h1>Weather Dashboard</h1>
+    <h2>Available Weather Data</h2>
+    <ul>
+      {% for file in files %}
+      <li>
+        <a href="/weather/{{ file }}">{{ file }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
