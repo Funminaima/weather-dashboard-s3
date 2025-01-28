@@ -4,6 +4,63 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather Dashboard</title>
+    <style>
+      /* General styling for the page */
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background: linear-gradient(135deg, #4facfe, #00f2fe);
+          color: #fff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+      }
+
+      /* Centering the content */
+      .container {
+          text-align: center;
+          max-width: 600px;
+          background: rgba(0, 0, 0, 0.2);
+          padding: 20px;
+          border-radius: 15px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Page heading */
+      h1 {
+          margin-bottom: 20px;
+          font-size: 2.5em;
+      }
+
+      /* Buttons for cities */
+      ul {
+          list-style: none;
+          padding: 0;
+      }
+
+      ul li {
+          margin: 10px 0;
+      }
+
+      ul li a {
+          display: inline-block;
+          text-decoration: none;
+          background: #0066cc;
+          color: #fff;
+          padding: 10px 20px;
+          border-radius: 25px;
+          font-size: 1.2em;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          transition: transform 0.2s, background-color 0.2s;
+      }
+
+      ul li a:hover {
+          background: #004a99;
+          transform: scale(1.05);
+      }
+    </style>
   </head>
   <body>
     <h1>Weather Dashboard</h1>
@@ -11,7 +68,9 @@
     <ul>
       {% for file in files %}
       <li>
-        <a href="/weather/{{ file }}">{{ file }}</a>
+        <a href="/weather/{{ file }}"
+          >{{ file.split('/')[-1].split('-')[0] }}
+        </a>
       </li>
       {% endfor %}
     </ul>
