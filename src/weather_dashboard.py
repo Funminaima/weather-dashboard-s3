@@ -18,9 +18,9 @@ class WeatherDashboard:
         self.bucket_name = f"{base_bucket_name}-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
         
         self.api_key = os.getenv('OPENWEATHER_API_KEY')
-        self.s3_client = boto3.client('s3')
+        # self.s3_client = boto3.client('s3')
 
-        # self.s3_client = boto3.client('s3', region_name='us-east-1')
+        self.s3_client = boto3.client('s3', region_name='us-east-1')
         # save unique bucket name to dedicated file 
         bucket_name_path = Path("bucket_name.txt")
         with open(bucket_name_path, "w") as f:
